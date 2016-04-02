@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Sat Apr  2 20:31:11 2016 bougon_p
+** Last update Sun Apr  3 01:13:13 2016 bougon_p
 */
 
 #include "shell.h"
@@ -138,7 +138,6 @@ int	launch_cmd(UNUSED char *buf, t_data *data, char **tab)
       free_tab(tab);
       exit(1);
     }
-  /* free_tab(tab); */
   return (cpid);
 }
 
@@ -174,5 +173,6 @@ int		exec_cmd(char *buf, t_data *data)
 	launch_cmd(buf, data, tmp->data->cmd);
       tmp = tmp->next;
     }
+  free_list(&data->all_cmd);
   return (0);
 }

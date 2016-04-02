@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 18:17:18 2016 bougon_p
-** Last update Wed Mar 30 23:16:56 2016 bougon_p
+** Last update Sun Apr  3 00:58:07 2016 bougon_p
 */
 
 #include "shell.h"
@@ -38,8 +38,9 @@ int	init_builtins(t_data *data)
   data->builtin[2] = &m_unsetenv;
   data->builtin[3] = &m_env;
   data->builtin[4] = &m_exit;
-  if ((data->builtins = malloc(sizeof(char *) * 5)) == NULL)
+  if ((data->builtins = malloc(sizeof(char *) * 6)) == NULL)
     return (1);
+  data->builtins[5] = NULL;
   if ((data->builtins[0] = my_strdup("cd")) == NULL ||
       (data->builtins[1] = my_strdup("setenv")) == NULL ||
       (data->builtins[2] = my_strdup("unsetenv")) == NULL ||

@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:48:45 2016 bougon_p
-** Last update Sun Apr  3 00:37:47 2016 bougon_p
+** Last update Sun Apr  3 01:18:34 2016 bougon_p
 */
 
 #include "shell.h"
@@ -113,6 +113,8 @@ void	change_path(t_data *data, char *pwd_asked,
       free(data->env[j]);
       home = get_full_var_from_env(data, "HOME");
       data->env[j] = rework_home(home);
+      free(data->pwd);
+      data->pwd = my_strdup(data->env[j]);
       return ;
     }
   if ((act_pwd = malloc(sizeof(char) * my_strlen(start_pwd) + 1)) == NULL)

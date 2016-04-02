@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Sat Apr  2 18:09:38 2016 bougon_p
-** Last update Sat Apr  2 18:10:06 2016 bougon_p
+** Last update Sun Apr  3 01:04:09 2016 bougon_p
 */
 
 #include "shell.h"
@@ -48,9 +48,11 @@ int		free_list(t_arglist *arg)
   while (tmp != arg->root)
     {
       tmp2 = tmp->next;
+      free_tab(tmp->data->cmd);
+      free(tmp->data);
       free(tmp);
       tmp = tmp2;
     }
-  free(tmp);
+  free(arg->root);
   return (0);
 }

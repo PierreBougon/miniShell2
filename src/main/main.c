@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:12:24 2016 bougon_p
-** Last update Sun Apr  3 00:35:38 2016 bougon_p
+** Last update Sun Apr  3 01:13:26 2016 bougon_p
 */
 
 #include "shell.h"
@@ -70,5 +70,7 @@ int		main(UNUSED int ac, UNUSED char **av, char **env)
   free(data.builtin);
   free_tab(data.builtins);
   free_tab(data.env);
+  free(data.pwd);
+  free(data.user);
   return (0);
 }
