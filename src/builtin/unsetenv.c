@@ -5,12 +5,12 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:50:32 2016 bougon_p
-** Last update Wed Mar 30 22:59:58 2016 bougon_p
+** Last update Fri Apr  1 18:30:47 2016 bougon_p
 */
 
 #include "shell.h"
 
-int	m_unsetenv(t_data *data)
+int	m_unsetenv(UNUSED t_data *data)
 {
   return (0);
 }

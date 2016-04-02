@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Feb  1 21:02:13 2016 bougon_p
-** Last update Wed Mar 30 21:35:09 2016 bougon_p
+** Last update Fri Apr  1 20:51:54 2016 bougon_p
 */
 
 #ifndef MY_H_
@@ -20,7 +20,9 @@ void	my_putchar(char);
 int	my_putstr(char *);
 int	my_strcmp(char *, char *);
 char	*my_strcat(char *, char *);
+char	*my_strcpy(char *, char *);
 char	*my_strdup(char *);
+char	*my_realloc(char *, size_t);
 int	my_strncmp(char *, char *, int);
 int	my_strlen(char *);
 int	my_getnbr(char *);

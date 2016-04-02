@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Tue Mar  8 10:28:08 2016 bougon_p
-** Last update Mon Mar 28 14:23:03 2016 bougon_p
+** Last update Fri Apr  1 20:50:32 2016 bougon_p
 */
 
 #include "get_next_line.h"

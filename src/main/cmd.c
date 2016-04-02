@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Fri Apr  1 14:50:16 2016 bougon_p
+** Last update Sat Apr  2 02:02:01 2016 bougon_p
 */
 
 #include "shell.h"
@@ -63,19 +63,16 @@ char	*rewrite_cmd(char *cmd)
 
   if ((new = malloc(sizeof(char) * my_strlen(cmd) + 6)) == NULL)
     return (NULL);
+  my_bzero(new, my_strlen(cmd) + 6);
   if (my_strncmp(cmd, "/bin/", 5) == 0)
     return (cmd);
-  new[0] = '/';
-  new[1] = 'b';
-  new[2] = 'i';
-  new[3] = 'n';
-  new[4] = '/';
-  new[5] = 0;
+  my_strcpy(new, "/bin/");
   my_strcat(new, cmd);
+  free(cmd);
   return (new);
 }
 
-int	launch_cmd(char *buf, t_data *data, char **tab)
+int	launch_cmd(UNUSED char *buf, t_data *data, char **tab)
 {
   pid_t	cpid;
   int	status;
@@ -92,6 +89,7 @@ int	launch_cmd(char *buf, t_data *data, char **tab)
 	  putstr_err(&tab[0][5]);
 	  putstr_err("\n");
 	}
+      free_tab(tab);
       exit(1);
     }
   free_tab(tab);
@@ -105,7 +103,6 @@ int	exec_cmd(char *buf, t_data *data)
 
   tab = parse_args(buf);
   data->cmd = tab;
-  ret = 2;
   if ((ret = check_builtin(data, tab)) == 1)
     return (-2);
   else if (ret == 2)

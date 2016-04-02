@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Fri Apr  1 18:08:57 2016 bougon_p
-** Last update Fri Apr  1 18:09:01 2016 bougon_p
+** Last update Fri Apr  1 23:04:10 2016 bougon_p
 */
 
 #include "my.h"
@@ -20,5 +20,6 @@ char	*my_strcpy(char *dest, char *src)
       dest[i] = src[i];
       i++;
     }
+  dest[i] = 0;
   return (dest);
 }

@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:09:58 2016 bougon_p
-** Last update Fri Apr  1 16:42:30 2016 bougon_p
+** Last update Sat Apr  2 00:00:01 2016 bougon_p
 */
 
 #ifndef	SHELL_H_
@@ -80,5 +80,7 @@ void	free_tab(char **);
 char	*my_epur_str(char *);
 char	**init_tab(int, int);
 char	*get_var_from_env(t_data *, char *);
+char	*get_full_var_from_env(t_data *, char *);
+int	get_pos_from_env(t_data *, char *);
 
 #endif /* !SHELL_H_ */

@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 18:16:34 2016 bougon_p
-** Last update Mon Mar 28 18:16:45 2016 bougon_p
+** Last update Sat Apr  2 02:10:58 2016 bougon_p
 */
 
 #include "shell.h"
@@ -25,11 +25,13 @@ char    *my_epur_str(char *str)
     {
       while ((str[i] == ' ' || str[i] == '\t') && str[i])
         i++;
-      if (i > 0 && (str[i - 1] == ' ' || str[i - 1] == '\t'))
+      if (i > 0 && (str[i - 1] == ' '
+		    || str[i - 1] == '\t') && str[i])
         new[n++] = ' ';
       while ((str[i] != ' ' && str[i] != '\t') && str[i])
         new[n++] = str[i++];
     }
+  new[n] = 0;
   free(str);
   str = new;
   return (new);

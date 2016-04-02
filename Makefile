@@ -5,7 +5,7 @@
 ## Login   <bougon_p@epitech.net>
 ## 
 ## Started on  Mon Mar 28 11:55:21 2016 bougon_p
-## Last update Fri Apr  1 18:10:11 2016 bougon_p
+## Last update Fri Apr  1 20:50:48 2016 bougon_p
 ##
 
 # USEFUL VARIABLES
@@ -65,6 +65,7 @@ SRCLIB	=	$(LIBPATH)my/get_next_line.c \
 		$(LIBPATH)my/my_strlen.c \
 		$(LIBPATH)my/my_strcpy.c \
 		$(LIBPATH)my/my_bzero.c \
+		$(LIBPATH)my/my_realloc.c \
 
 LDFLAGS =       -lmy -L$(LIBPATH)
 
