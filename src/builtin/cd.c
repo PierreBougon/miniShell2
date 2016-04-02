@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:48:45 2016 bougon_p
-** Last update Sat Apr  2 01:50:25 2016 bougon_p
+** Last update Sun Apr  3 00:37:47 2016 bougon_p
 */
 
 #include "shell.h"
@@ -123,12 +123,14 @@ void	change_path(t_data *data, char *pwd_asked,
   j = get_pos_from_env(data, "PWD");
   free(data->env[j]);
   data->env[j] = act_pwd;
+  free(data->pwd);
+  data->pwd = my_strdup(act_pwd);
 }
 
 int	m_cd(t_data *data)
 {
   char	*pwd_asked;
-  char	*act_pwd;
+  char	*start_pwd;
   int	ret;
   bool	go_home;
 
@@ -142,14 +144,15 @@ int	m_cd(t_data *data)
   ret = chdir(pwd_asked);
   if (ret == 0)
     {
-      act_pwd = get_full_var_from_env(data, "PWD");
-      change_path(data, pwd_asked, act_pwd, go_home);
+      printf("%s\n", data->pwd);
+      start_pwd = data->pwd;
+      change_path(data, pwd_asked, start_pwd, go_home);
     }
   else
     {
-      my_putstr("Cannot access : ");
-      my_putstr(pwd_asked);
-      my_putstr("\n");
+      putstr_err("Cannot access : ");
+      putstr_err(pwd_asked);
+      putstr_err("\n");
     }
   return (0);
 }

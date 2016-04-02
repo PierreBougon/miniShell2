@@ -5,10 +5,29 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Fri Apr  1 20:37:47 2016 bougon_p
-** Last update Fri Apr  1 23:36:15 2016 bougon_p
+** Last update Sat Apr  2 17:15:02 2016 bougon_p
 */
 
 #include "my.h"
+
+char	**my_realloc_tab(char **tab, int add_lines)
+{
+  char	**new_tab;
+  int	act_lines;
+  int	j;
+
+  act_lines = -1;
+  while (tab[++act_lines] != NULL);
+  if ((new_tab = malloc(sizeof(char *)
+			* (act_lines + add_lines + 1))) == NULL)
+    return (NULL);
+  new_tab[act_lines + add_lines] = NULL;
+  j = -1;
+  while (++j < act_lines)
+    new_tab[j] = tab[j];
+  free(tab);
+  return (new_tab);
+}
 
 char	*my_realloc(char *line, size_t add)
 {

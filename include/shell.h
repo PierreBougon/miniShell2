@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:09:58 2016 bougon_p
-** Last update Sat Apr  2 00:00:01 2016 bougon_p
+** Last update Sat Apr  2 18:18:56 2016 bougon_p
 */
 
 #ifndef	SHELL_H_
@@ -19,6 +19,7 @@
 # include <sys/wait.h>
 
 # include "my.h"
+# include "list.h"
 # include "struct.h"
 # include "get_next_line.h"
 
@@ -26,10 +27,7 @@
 ** DEFINES
 */
 
-# define PROMPT "$> "
-# define PROMPT_SIZE 3
 # define NB_BUILTINS 5
-
 
 # define UNUSED __attribute__((__unused__))
 

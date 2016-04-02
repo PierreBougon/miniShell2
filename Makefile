@@ -5,7 +5,7 @@
 ## Login   <bougon_p@epitech.net>
 ## 
 ## Started on  Mon Mar 28 11:55:21 2016 bougon_p
-## Last update Fri Apr  1 20:50:48 2016 bougon_p
+## Last update Sat Apr  2 18:19:11 2016 bougon_p
 ##
 
 # USEFUL VARIABLES
@@ -34,6 +34,7 @@ SRC		=	$(MAIN)main.c \
 			$(MAIN)err.c \
 			$(TOOLS)init.c \
 			$(TOOLS)epur.c \
+			$(TOOLS)initlist.c \
 			$(TOOLS)get_var.c \
 			$(FREE)free_tab.c \
 			$(BUILTIN)cd.c \

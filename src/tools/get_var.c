@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Fri Apr  1 16:37:14 2016 bougon_p
-** Last update Fri Apr  1 23:59:38 2016 bougon_p
+** Last update Sat Apr  2 16:22:34 2016 bougon_p
 */
 
 #include "shell.h"
@@ -52,5 +52,5 @@ int	get_pos_from_env(t_data *data, char *to_find)
       if (my_strncmp(data->env[j], to_find, size) == 0)
 	return (j);
     }
-  return (0);
+  return (-1);
 }

@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:12:24 2016 bougon_p
-** Last update Sat Apr  2 01:54:29 2016 bougon_p
+** Last update Sun Apr  3 00:35:38 2016 bougon_p
 */
 
 #include "shell.h"
@@ -56,6 +56,7 @@ void	copy_env(char **env, t_data *data)
   while (env[++i] != NULL)
     data->env[i] = my_strdup(env[i]);
   get_usr_name(data);
+  data->pwd = my_strdup(get_full_var_from_env(data, "PWD"));
 }
 
 int		main(UNUSED int ac, UNUSED char **av, char **env)
