@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:09:58 2016 bougon_p
-** Last update Wed Apr  6 16:39:51 2016 bougon_p
+** Last update Wed Apr  6 18:17:16 2016 bougon_p
 */
 
 #ifndef	SHELL_H_
@@ -65,6 +65,7 @@ int	count_cmd(char *);
 void	parse_args(char *, t_data *);
 char	*get_next_path(t_data *);
 bool	parse_pipes(t_cdlist *);
+int	check_pipe_err(t_cdlist *);
 
 /*
 ** BUILTIN

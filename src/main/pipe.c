@@ -5,10 +5,20 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Tue Apr  5 19:02:48 2016 bougon_p
-** Last update Wed Apr  6 17:20:53 2016 bougon_p
+** Last update Wed Apr  6 18:22:26 2016 bougon_p
 */
 
 #include "shell.h"
+
+int	check_pipe_err(t_cdlist *tmp)
+{
+  if (my_strcmp(tmp->data->cmd[0], "|") || tmp->data->cmd_pip == NULL)
+    {
+      putstr_err("Invalid null command\n");
+      return (1);
+    }
+  return (0);
+}
 
 void	count_line_col(t_cdlist *tmp, int *lines, int *cols)
 {
@@ -22,7 +32,7 @@ void	count_line_col(t_cdlist *tmp, int *lines, int *cols)
     }
 }
 
-void	separ_cmd(t_cdlist *tmp, int j)
+int	separ_cmd(t_cdlist *tmp, int j)
 {
   int	lines;
   int	cols;
@@ -40,6 +50,9 @@ void	separ_cmd(t_cdlist *tmp, int j)
       tmp->data->cmd[j] = NULL;
     }
   tmp->data->cmd_pip[n] = NULL;
+  if (tmp->data->cmd_pip[0] == NULL)
+    return (1);
+  return (0);
 }
 
 bool	parse_pipes(t_cdlist *tmp)
@@ -49,15 +62,19 @@ bool	parse_pipes(t_cdlist *tmp)
 
   j = -1;
   pipe = false;
+  tmp->data->cmd_pip = NULL;
   while (tmp->data->cmd[++j] != NULL)
     {
       if (my_strcmp(tmp->data->cmd[j], "|") == 0)
 	{
+	  if (j == 0)
+	    return (true);
 	  pipe = true;
 	  break ;
 	}
     }
   if (pipe)
-    separ_cmd(tmp, j);
+    if (separ_cmd(tmp, j) == 1)
+      return (true);
   return (pipe);
 }

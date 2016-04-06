@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Wed Apr  6 17:40:10 2016 bougon_p
+** Last update Wed Apr  6 18:18:39 2016 bougon_p
 */
 
 #include "shell.h"
@@ -120,7 +120,9 @@ int		exec_cmd(char *buf, t_data *data)
   while (tmp != data->all_cmd.root)
     {
       epur_all_cmd(tmp);
-      data->pipe = parse_pipes(tmp);
+      if ((data->pipe = parse_pipes(tmp)) == true)
+	if (check_pipe_err(tmp) == 1)
+	  return (0);
       show_all_tab(tmp, data);
       if (tmp->data->cmd[0][0] != 0)
 	{
