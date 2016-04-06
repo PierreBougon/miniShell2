@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Wed Apr  6 17:17:45 2016 bougon_p
+** Last update Wed Apr  6 17:40:10 2016 bougon_p
 */
 
 #include "shell.h"
@@ -38,7 +38,7 @@ void	exec_forked(t_data *data, char **tab)
       full_test = false;
     }
   data->savecmd = tab[0];
-  printf("first cmd = %s\n", tab[0]);
+  dprintf(2, "first cmd = %s\n", tab[0]);
   while (tab[0][0] != 0
 	 && execve(tab[0], tab, data->env) == -1)
     {
