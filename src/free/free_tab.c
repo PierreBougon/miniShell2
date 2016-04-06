@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 18:18:18 2016 bougon_p
-** Last update Wed Apr  6 23:32:38 2016 bougon_p
+** Last update Wed Apr  6 23:51:44 2016 bougon_p
 */
 
 #include "shell.h"
@@ -16,10 +16,6 @@ void    free_tab(char **tab)
 
   i = 0;
   while (tab[i] != NULL)
-    {
-      /* printf("%d -> ", i); */
-      /* printf("%s\n", tab[i]); */
-      free(tab[i++]);
-    }
+    free(tab[i++]);
   free(tab);
 }
