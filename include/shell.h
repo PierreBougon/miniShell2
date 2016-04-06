@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:09:58 2016 bougon_p
-** Last update Sat Apr  2 18:18:56 2016 bougon_p
+** Last update Wed Apr  6 16:39:51 2016 bougon_p
 */
 
 #ifndef	SHELL_H_
@@ -51,6 +51,8 @@ int	m_env(t_data *);
 int	m_exit(t_data *);
 int	check_builtin(t_data *, char **);
 int	init_builtins(t_data *);
+char	*strcatnext_file(char *, char *);
+void	modify_pwd(char *);
 
 /*
 ** MAIN
@@ -58,6 +60,11 @@ int	init_builtins(t_data *);
 
 int	exec_cmd(char *, t_data *);
 void	putstr_err(char *);
+int	count_spaces(char *);
+int	count_cmd(char *);
+void	parse_args(char *, t_data *);
+char	*get_next_path(t_data *);
+bool	parse_pipes(t_cdlist *);
 
 /*
 ** BUILTIN
@@ -80,5 +87,10 @@ char	**init_tab(int, int);
 char	*get_var_from_env(t_data *, char *);
 char	*get_full_var_from_env(t_data *, char *);
 int	get_pos_from_env(t_data *, char *);
+
+/*
+** ShowTab
+*/
+void	show_all_tab(t_cdlist *, t_data *);
 
 #endif /* !SHELL_H_ */

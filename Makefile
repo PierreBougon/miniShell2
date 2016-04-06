@@ -5,7 +5,7 @@
 ## Login   <bougon_p@epitech.net>
 ## 
 ## Started on  Mon Mar 28 11:55:21 2016 bougon_p
-## Last update Sat Apr  2 18:19:11 2016 bougon_p
+## Last update Wed Apr  6 15:15:39 2016 bougon_p
 ##
 
 # USEFUL VARIABLES
@@ -32,17 +32,23 @@ FREE		=	src/free/
 SRC		=	$(MAIN)main.c \
 			$(MAIN)cmd.c \
 			$(MAIN)err.c \
+			$(MAIN)count.c \
+			$(MAIN)path.c \
+			$(MAIN)pipe.c \
+			$(MAIN)wordtab.c \
 			$(TOOLS)init.c \
 			$(TOOLS)epur.c \
 			$(TOOLS)initlist.c \
 			$(TOOLS)get_var.c \
 			$(FREE)free_tab.c \
 			$(BUILTIN)cd.c \
+			$(BUILTIN)pwd.c \
 			$(BUILTIN)setenv.c \
 			$(BUILTIN)unsetenv.c \
 			$(BUILTIN)env.c \
 			$(BUILTIN)exit.c \
 			$(BUILTIN)builtins.c \
+			src/show_tab.c \
 
 OBJS    	=	$(SRC:.c=.o)
 

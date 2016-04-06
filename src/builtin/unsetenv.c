@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:50:32 2016 bougon_p
-** Last update Sat Apr  2 17:47:16 2016 bougon_p
+** Last update Mon Apr  4 21:06:20 2016 bougon_p
 */
 
 #include "shell.h"
@@ -15,6 +15,7 @@ char	**realloc_inv(char **tab, int to_kill)
   char	**new_tab;
   int	act_lines;
   int	j;
+  int	k;
 
   act_lines = -1;
   while (tab[++act_lines] != NULL);
@@ -23,9 +24,12 @@ char	**realloc_inv(char **tab, int to_kill)
     return (NULL);
   new_tab[act_lines - 1] = NULL;
   j = -1;
+  k = 0;
   while (++j < act_lines)
-    if (j != to_kill)
-      new_tab[j] = tab[j];
+    {
+      if (j != to_kill)
+	new_tab[k++] = tab[j];
+    }
   free(tab);
   return (new_tab);
 }

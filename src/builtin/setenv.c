@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:49:53 2016 bougon_p
-** Last update Sat Apr  2 17:14:47 2016 bougon_p
+** Last update Mon Apr  4 16:17:36 2016 bougon_p
 */
 
 #include "shell.h"
@@ -15,6 +15,11 @@ void	create_var(t_data *data)
   int	j;
 
   j = -1;
+  if (data->cmd[2] == NULL)
+    {
+      putstr_err("Variable value is not specified\n");
+      return ;
+    }
   while (data->env[++j] != NULL);
   data->env = my_realloc_tab(data->env, 1);
   if ((data->env[j] = malloc(sizeof(char)
@@ -35,13 +40,15 @@ void	modify_var(t_data *data)
     return (create_var(data));
   if (data->cmd[2] == NULL)
     {
-      data->cmd[2] = malloc(sizeof(char) * 1);
+      if ((data->cmd[2] = malloc(sizeof(char) * 1)) == NULL)
+	exit(1);
       data->cmd[2][0] = 0;
       my_strcpy(&data->env[j][my_strlen(data->cmd[1]) + 1], data->cmd[2]);
       free(data->cmd[2]);
       data->cmd[2] = NULL;
       return ;
     }
+  data->env[j] = my_realloc(data->env[j], my_strlen(data->cmd[2]) + 1);
   my_strcpy(&data->env[j][my_strlen(data->cmd[1]) + 1], data->cmd[2]);
 }
 

@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 23:00:39 2016 bougon_p
-** Last update Sat Apr  2 20:39:23 2016 bougon_p
+** Last update Mon Apr  4 23:11:08 2016 bougon_p
 */
 
 #include "shell.h"
@@ -24,7 +24,7 @@ int	check_builtin(t_data *data, char **cmd)
 	  ret = data->builtin[i](data);
 	  return (ret);
 	}
-i++;
+      i++;
     }
   return (2);
 }

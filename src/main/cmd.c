@@ -5,103 +5,10 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Sun Apr  3 01:13:13 2016 bougon_p
+** Last update Wed Apr  6 17:17:45 2016 bougon_p
 */
 
 #include "shell.h"
-
-int	count_spaces(char *str)
-{
-  int	i;
-  int	n;
-
-  i = -1;
-  n = 0;
-  while (str[++i])
-    {
-      if (str[i] == ' ')
-	n++;
-    }
-  return (n);
-}
-
-int	count_cmd(char *str)
-{
-  int	i;
-  int	n;
-
-  i = -1;
-  n = 0;
-  while (str[++i])
-    {
-      if (str[i] == ';')
-	n++;
-    }
-  return (n);
-}
-
-void	init_all_cmd(t_data *data, char *buf, int len_max)
-{
-  int		n_max;
-  int		i;
-  t_cdlist	*tmp;
-  t_cmd		*cmd;
-
-  create_cdlist(&data->all_cmd.root);
-  i = 0;
-  tmp = data->all_cmd.root;
-  n_max = count_cmd(buf) + 1;
-  while (i < n_max)
-    {
-      if ((cmd = malloc(sizeof(cmd) * 1)) == NULL)
-	exit(1);
-      if ((cmd->cmd = init_tab(len_max, my_strlen(buf))) == NULL)
-	exit(1);
-      add_last_cdl(data->all_cmd.root, cmd);
-      tmp = tmp->next;
-      i++;
-    }
-}
-
-void		parse_args(char *buf, t_data *data)
-{
-  int		i;
-  int		n;
-  int		n_max;
-  int		k;
-  t_cdlist	*tmp;
-
-  if ((buf = my_epur_str(buf)) == NULL)
-    exit(1);
-  n_max = count_spaces(buf) + 1;
-  init_all_cmd(data, buf, n_max);
-  i = -1;
-  n = 0;
-  k = 0;
-  tmp = data->all_cmd.root->next;
-  while (buf[++i])
-    {
-      if (buf[i] == ';')
-  	{
-  	  while (n++ < n_max)
-  	    tmp->data->cmd[n] = NULL;
-  	  tmp = tmp->next;
-  	  n = 0;
-  	  k = 0;
-  	}
-      else if (buf[i] == ' ' && k > 0 && buf[i + 1] != ';')
-  	{
-	  n++;
-  	  k = 0;
-  	}
-      else if (buf[i] != ' ')
-  	tmp->data->cmd[n][k++] = buf[i];
-      printf("%d\n", n);
-    }
-  while (n++ < n_max)
-    tmp->data->cmd[n] = NULL;
-  free(buf);
-}
 
 char	*rewrite_cmd(char *cmd)
 {
@@ -118,42 +25,89 @@ char	*rewrite_cmd(char *cmd)
   return (new);
 }
 
-int	launch_cmd(UNUSED char *buf, t_data *data, char **tab)
+void	exec_forked(t_data *data, char **tab)
+{
+  bool	full_test;
+  int	nb_path;
+
+  data->nb_path = 1;
+  full_test = true;
+  if ((nb_path = get_pos_from_env(data, "PATH")) == -1)
+    {
+      tab[0] = rewrite_cmd(tab[0]);
+      full_test = false;
+    }
+  data->savecmd = tab[0];
+  printf("first cmd = %s\n", tab[0]);
+  while (tab[0][0] != 0
+	 && execve(tab[0], tab, data->env) == -1)
+    {
+      if (full_test)
+	{
+	  if ((tab[0] = get_next_path(data)) == NULL)
+	    full_test = false;
+	}
+      if (!full_test)
+	{
+	  putstr_err("cannot exec the following comand : ");
+	  putstr_err(data->savecmd);
+	  putstr_err("\n");
+	  break ;
+	}
+    }
+  free_tab(tab);
+  exit(1);
+}
+
+void	exec_pipe(t_data *data, char **tab, char **tab_pipe)
+{
+  pid_t	cpid_2;
+  int	pipefd[2];
+  int	status;
+
+  pipe(pipefd);
+  cpid_2 = fork();
+  if (cpid_2 != 0)
+    wait(&status);
+  if (cpid_2 == 0)
+    {
+      dup2(pipefd[1], 1);
+      close(pipefd[0]);
+      exec_forked(data, tab);
+    }
+  else
+    {
+      dup2(pipefd[0], 0);
+      close(pipefd[1]);
+      exec_forked(data, tab_pipe);
+    }
+}
+
+int	launch_cmd(t_data *data, char **tab, char **tab_pipe)
 {
   pid_t	cpid;
   int	status;
 
-  tab[0] = rewrite_cmd(tab[0]);
   cpid = fork();
   if (cpid != 0)
     wait(&status);
   if (cpid == 0)
     {
-      if (execve(tab[0], tab, data->env) == -1)
-	{
-	  putstr_err("cannot exec the following comand : ");
-	  putstr_err(&tab[0][5]);
-	  putstr_err("\n");
-	}
-      free_tab(tab);
-      exit(1);
+      if (!data->pipe)
+	exec_forked(data, tab);
+      else
+	exec_pipe(data, tab, tab_pipe);
     }
   return (cpid);
 }
 
-void		show_all_tab(t_arglist *arg)
+void	epur_all_cmd(t_cdlist *tmp)
 {
-  t_cdlist	*tmp;
-  int		j;
+  int	j;
 
-  tmp = arg->root->next;
-  while (tmp != arg->root)
-    {
-      j = -1;
-      while (tmp->data->cmd[++j] != NULL)
-	printf("%s\n", tmp->data->cmd[j]);
-      tmp = tmp->next;
-    }
+  j = -1;
+  while (tmp->data->cmd[++j] != NULL)
+    tmp->data->cmd[j] = my_epur_str(tmp->data->cmd[j]);
 }
 
 int		exec_cmd(char *buf, t_data *data)
@@ -163,14 +117,18 @@ int		exec_cmd(char *buf, t_data *data)
 
   parse_args(buf, data);
   tmp = data->all_cmd.root->next;
-  show_all_tab(&data->all_cmd);
   while (tmp != data->all_cmd.root)
     {
-      tmp->data->cmd[0] = my_epur_str(tmp->data->cmd[0]);
-      if ((ret = check_builtin(data, tmp->data->cmd)) == 1)
-	return (-2);
-      else if (ret == 2)
-	launch_cmd(buf, data, tmp->data->cmd);
+      epur_all_cmd(tmp);
+      data->pipe = parse_pipes(tmp);
+      show_all_tab(tmp, data);
+      if (tmp->data->cmd[0][0] != 0)
+	{
+	  if ((ret = check_builtin(data, tmp->data->cmd)) == 1)
+	    return (-2);
+	  else if (ret == 2)
+	    launch_cmd(data, tmp->data->cmd, tmp->data->cmd_pip);
+	}
       tmp = tmp->next;
     }
   free_list(&data->all_cmd);

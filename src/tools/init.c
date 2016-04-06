@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 18:17:18 2016 bougon_p
-** Last update Sun Apr  3 00:58:07 2016 bougon_p
+** Last update Tue Apr  5 19:37:07 2016 bougon_p
 */
 
 #include "shell.h"
@@ -17,12 +17,12 @@ char    **init_tab(int line, int col)
 
   i = 0;
   if ((tab_to_malloc = malloc(sizeof(char *) * (line + 1))) == NULL)
-    return (NULL);
+    exit(1);
   tab_to_malloc[line] = NULL;
   while (i < line)
     {
       if ((tab_to_malloc[i] = malloc(sizeof(char) * (col + 1))) == NULL)
-        return (NULL);
+        exit(1);
       tab_to_malloc[i] = my_bzero(tab_to_malloc[i], col + 1);
       i++;
     }

@@ -5,10 +5,27 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:12:24 2016 bougon_p
-** Last update Sun Apr  3 01:13:26 2016 bougon_p
+** Last update Wed Apr  6 17:28:14 2016 bougon_p
 */
 
 #include "shell.h"
+
+void	get_usr_name(t_data *data)
+{
+  char	*tmp;
+
+  if (data->user != NULL)
+    free(data->user);
+  if ((tmp = get_var_from_env(data, "USER")) == NULL)
+    {
+      data->user = my_strdup("$> ");
+      return ;
+    }
+  data->user = my_strdup(tmp);
+  data->user = my_realloc(data->user, 3);
+  data->user[my_strlen(tmp) + 2] = 0;
+  my_strcat(data->user, "$ ");
+}
 
 int	start_shell(t_data *data)
 {
@@ -17,27 +34,16 @@ int	start_shell(t_data *data)
 
   while (1)
     {
+      get_usr_name(data);
       my_putstr(data->user);
       if ((buf = get_next_line(0)) == NULL)
-	return (0);
-      if ((ret = exec_cmd(buf, data)) == 1 || ret == -1 || ret == -2)
+      	return (0);
+      if (buf[0] == 0)
+	free(buf);
+      else if ((ret = exec_cmd(buf, data)) == 1 || ret == -1 || ret == -2)
 	return (0);
     }
   return (0);
-}
-
-void	get_usr_name(t_data *data)
-{
-  char	*tmp;
-
-  if ((tmp = get_var_from_env(data, "USER")) == NULL)
-    data->user = "$>";
-  if ((data->user = malloc(sizeof(char) * (my_strlen(tmp) + 3))) == NULL)
-    exit(1);
-  my_bzero(data->user, my_strlen(tmp) + 3);
-  my_strcpy(data->user, tmp);
-  data->user[my_strlen(tmp) + 2] = 0;
-  my_strcat(data->user, "$ ");
 }
 
 void	copy_env(char **env, t_data *data)
@@ -63,7 +69,8 @@ int		main(UNUSED int ac, UNUSED char **av, char **env)
 {
   t_data	data;
 
-  signal(SIGINT, SIG_IGN);
+  data.user = NULL;
+  /* signal(SIGINT, SIG_IGN); */
   init_builtins(&data);
   copy_env(env, &data);
   start_shell(&data);
