@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:48:45 2016 bougon_p
-** Last update Wed Apr  6 17:40:10 2016 bougon_p
+** Last update Wed Apr  6 18:48:18 2016 bougon_p
 */
 
 #include "shell.h"
@@ -117,7 +117,7 @@ int	m_cd(t_data *data)
     {
       start_pwd = data->pwd;
       change_path(data, pwd_asked, start_pwd, go_home);
-      dprintf(2, "%s\n", data->pwd);
+      /* dprintf(2, "%s\n", data->pwd); */
     }
   else
     {

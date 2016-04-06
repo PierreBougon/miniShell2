@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Apr  4 17:58:03 2016 bougon_p
-** Last update Wed Apr  6 15:51:01 2016 bougon_p
+** Last update Wed Apr  6 22:19:40 2016 bougon_p
 */
 
 #include "shell.h"
@@ -51,5 +51,6 @@ char		*get_next_path(t_data *data)
     return (NULL);
   my_strcat(new, data->savecmd);
   data->nb_path++;
+  dprintf(2, "%s\n", new);
   return (new);
 }

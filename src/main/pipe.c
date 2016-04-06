@@ -5,14 +5,14 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Tue Apr  5 19:02:48 2016 bougon_p
-** Last update Wed Apr  6 18:22:26 2016 bougon_p
+** Last update Wed Apr  6 22:28:01 2016 bougon_p
 */
 
 #include "shell.h"
 
 int	check_pipe_err(t_cdlist *tmp)
 {
-  if (my_strcmp(tmp->data->cmd[0], "|") || tmp->data->cmd_pip == NULL)
+  if (my_strcmp(tmp->data->cmd[0], "|") == 0 || tmp->data->cmd_pip == NULL)
     {
       putstr_err("Invalid null command\n");
       return (1);

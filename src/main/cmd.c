@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Wed Apr  6 18:18:39 2016 bougon_p
+** Last update Wed Apr  6 22:34:51 2016 bougon_p
 */
 
 #include "shell.h"
@@ -25,13 +25,15 @@ char	*rewrite_cmd(char *cmd)
   return (new);
 }
 
-void	exec_forked(t_data *data, char **tab)
+int	exec_forked(t_data *data, char **tab)
 {
   bool	full_test;
   int	nb_path;
 
   data->nb_path = 1;
   full_test = true;
+  if (tab[0][0] == '/')
+    return (putstr_err("Invalid command\n"), 1);
   if ((nb_path = get_pos_from_env(data, "PATH")) == -1)
     {
       tab[0] = rewrite_cmd(tab[0]);
@@ -73,13 +75,15 @@ void	exec_pipe(t_data *data, char **tab, char **tab_pipe)
     {
       dup2(pipefd[1], 1);
       close(pipefd[0]);
-      exec_forked(data, tab);
+      if (exec_forked(data, tab) == 1)
+	exit(1);
     }
   else
     {
       dup2(pipefd[0], 0);
       close(pipefd[1]);
-      exec_forked(data, tab_pipe);
+      if (exec_forked(data, tab_pipe) == 1)
+	exit(1);
     }
 }
 
@@ -94,7 +98,10 @@ int	launch_cmd(t_data *data, char **tab, char **tab_pipe)
   if (cpid == 0)
     {
       if (!data->pipe)
-	exec_forked(data, tab);
+	{
+	  if (exec_forked(data, tab) == 1)
+	    exit(1);
+	}
       else
 	exec_pipe(data, tab, tab_pipe);
     }
