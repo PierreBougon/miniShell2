@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Wed Apr  6 22:34:51 2016 bougon_p
+** Last update Thu Apr  7 16:11:35 2016 bougon_p
 */
 
 #include "shell.h"
@@ -18,9 +18,20 @@ char	*rewrite_cmd(char *cmd)
     return (NULL);
   my_bzero(new, my_strlen(cmd) + 6);
   if (my_strncmp(cmd, "/bin/", 5) == 0)
-    return (cmd);
+    return (free(new), cmd);
   my_strcpy(new, "/bin/");
   my_strcat(new, cmd);
+  free(cmd);
+  return (new);
+}
+
+char	*rewrite_bin_cmd(char *cmd)
+{
+  char	*new;
+
+  if (my_strncmp(cmd, "/bin/", 5) != 0)
+    return (cmd);
+  new = my_strdup(&cmd[5]);
   free(cmd);
   return (new);
 }
@@ -32,6 +43,7 @@ int	exec_forked(t_data *data, char **tab)
 
   data->nb_path = 1;
   full_test = true;
+  tab[0] = rewrite_bin_cmd(tab[0]);
   if (tab[0][0] == '/')
     return (putstr_err("Invalid command\n"), 1);
   if ((nb_path = get_pos_from_env(data, "PATH")) == -1)

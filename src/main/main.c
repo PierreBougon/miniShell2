@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:12:24 2016 bougon_p
-** Last update Wed Apr  6 17:28:14 2016 bougon_p
+** Last update Thu Apr  7 15:23:19 2016 bougon_p
 */
 
 #include "shell.h"
@@ -70,7 +70,7 @@ int		main(UNUSED int ac, UNUSED char **av, char **env)
   t_data	data;
 
   data.user = NULL;
-  /* signal(SIGINT, SIG_IGN); */
+  signal(SIGINT, SIG_IGN);
   init_builtins(&data);
   copy_env(env, &data);
   start_shell(&data);
