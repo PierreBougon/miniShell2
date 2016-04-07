@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Thu Apr  7 16:11:35 2016 bougon_p
+** Last update Thu Apr  7 20:44:16 2016 bougon_p
 */
 
 #include "shell.h"
@@ -43,9 +43,8 @@ int	exec_forked(t_data *data, char **tab)
 
   data->nb_path = 1;
   full_test = true;
-  tab[0] = rewrite_bin_cmd(tab[0]);
-  if (tab[0][0] == '/')
-    return (putstr_err("Invalid command\n"), 1);
+  /* if (tab[0][0] == '/') */
+  /*   return (putstr_err("Invalid command\n"), 1); */
   if ((nb_path = get_pos_from_env(data, "PATH")) == -1)
     {
       tab[0] = rewrite_cmd(tab[0]);
@@ -58,14 +57,14 @@ int	exec_forked(t_data *data, char **tab)
     {
       if (full_test)
 	{
+	  tab[0] = rewrite_bin_cmd(tab[0]);
 	  if ((tab[0] = get_next_path(data)) == NULL)
 	    full_test = false;
 	}
       if (!full_test)
 	{
-	  putstr_err("cannot exec the following comand : ");
 	  putstr_err(data->savecmd);
-	  putstr_err("\n");
+	  putstr_err(": Command not found.\n");
 	  break ;
 	}
     }

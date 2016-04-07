@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Feb  1 21:02:13 2016 bougon_p
-** Last update Wed Apr  6 23:25:53 2016 bougon_p
+** Last update Thu Apr  7 20:34:19 2016 bougon_p
 */
 
 #ifndef MY_H_
@@ -15,6 +15,7 @@
 # include <stdlib.h>
 # include <strings.h>
 # include <string.h>
+# include <stdbool.h>
 
 void	my_putchar(char);
 int	my_putstr(char *);
@@ -33,5 +34,8 @@ char	*my_revstr(char *);
 char	*my_strdup(char *);
 void	*my_bzero(void *, size_t);
 int	my_printf(const char *, ...);
+bool	is_alpha_num(char *);
+bool	is_alpha(char *);
+bool	is_num(char *);
 
 #endif /* !MY_H_ */

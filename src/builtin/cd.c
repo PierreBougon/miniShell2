@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:48:45 2016 bougon_p
-** Last update Wed Apr  6 23:52:19 2016 bougon_p
+** Last update Thu Apr  7 19:57:46 2016 bougon_p
 */
 
 #include "shell.h"
@@ -105,8 +105,15 @@ int	m_cd(t_data *data)
   int	ret;
   bool	go_home;
 
+  if (data->env == NULL)
+    return (0);
   go_home = false;
   pwd_asked = data->cmd[1];
+  if (data->old_pwd == NULL && pwd_asked[0] == '-')
+    return (0);
+  if (pwd_asked[0] == '-')
+    pwd_asked = data->old_pwd;
+  data->old_pwd = my_strdup(&data->pwd[4]);
   if (pwd_asked == NULL)
     {
       pwd_asked = get_var_from_env(data, "HOME");

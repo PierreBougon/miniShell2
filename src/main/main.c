@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:12:24 2016 bougon_p
-** Last update Thu Apr  7 15:23:19 2016 bougon_p
+** Last update Thu Apr  7 20:14:43 2016 bougon_p
 */
 
 #include "shell.h"
@@ -40,8 +40,10 @@ int	start_shell(t_data *data)
       	return (0);
       if (buf[0] == 0)
 	free(buf);
-      else if ((ret = exec_cmd(buf, data)) == 1 || ret == -1 || ret == -2)
+      else if ((ret = exec_cmd(buf, data)) == 1 || ret == -1)
 	return (0);
+      else if (ret == -2)
+	return (-2);
     }
   return (0);
 }
@@ -51,6 +53,12 @@ void	copy_env(char **env, t_data *data)
   int	i;
   int	j;
 
+  if (*env == NULL)
+    {
+      data->env = NULL;
+      get_usr_name(data);
+      return ;
+    }
   j = 0;
   i = 1;
   while (env[j] != NULL)
@@ -65,19 +73,29 @@ void	copy_env(char **env, t_data *data)
   data->pwd = my_strdup(get_full_var_from_env(data, "PWD"));
 }
 
+void	free_all(t_data *data)
+{
+  free(data->builtin);
+  free_tab(data->builtins);
+  free_tab(data->env);
+  free(data->pwd);
+  free(data->user);
+}
+
 int		main(UNUSED int ac, UNUSED char **av, char **env)
 {
   t_data	data;
 
   data.user = NULL;
+  data.old_pwd = NULL;
   signal(SIGINT, SIG_IGN);
   init_builtins(&data);
   copy_env(env, &data);
-  start_shell(&data);
-  free(data.builtin);
-  free_tab(data.builtins);
-  free_tab(data.env);
-  free(data.pwd);
-  free(data.user);
+  if (start_shell(&data) == -2)
+    {
+      free_all(&data);
+      return(my_getnbr(data.cmd[1]));
+    }
+  free_all(&data);
   return (0);
 }

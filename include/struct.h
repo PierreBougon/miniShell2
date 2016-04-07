@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Fri Mar 11 18:20:50 2016 bougon_p
-** Last update Wed Apr  6 16:38:26 2016 bougon_p
+** Last update Thu Apr  7 18:46:38 2016 bougon_p
 */
 
 #ifndef STRUCT_H_
@@ -16,6 +16,7 @@ typedef struct		s_data
   char			**env;
   char			**cmd;
   char			*pwd;
+  char			*old_pwd;
   char			*user;
   char			*savecmd;
   bool			pipe;
