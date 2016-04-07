@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Apr  4 16:20:26 2016 bougon_p
-** Last update Wed Apr  6 17:23:22 2016 bougon_p
+** Last update Thu Apr  7 14:00:50 2016 bougon_p
 */
 
 #include "shell.h"
@@ -52,6 +52,14 @@ void		word_tab(t_data *data, char *buf, int n, int k)
   	}
       else if (buf[i] == ' ' && k > 0 && buf[i + 1] != ';')
   	{
+	  n++;
+  	  k = 0;
+  	}
+      else if (buf[i] == '|' && k > 0 && buf[i + 1] != ';')
+  	{
+	  n++;
+  	  k = 0;
+	  tmp->data->cmd[n][k++] = buf[i];
 	  n++;
   	  k = 0;
   	}
