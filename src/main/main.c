@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:12:24 2016 bougon_p
-** Last update Thu Apr  7 20:14:43 2016 bougon_p
+** Last update Fri Apr  8 15:41:40 2016 bougon_p
 */
 
 #include "shell.h"
@@ -52,11 +52,19 @@ void	copy_env(char **env, t_data *data)
 {
   int	i;
   int	j;
+  char	pwd[4096];
 
   if (*env == NULL)
     {
-      data->env = NULL;
+      if ((data->env = malloc(sizeof(char *) * (2))) == NULL)
+	return ;
+      data->env[1] = NULL;
+      data->env[0] = my_strdup("PWD=");
+      getcwd(&pwd[0], 4096);
+      data->env[0] = my_realloc(data->env[0], 5 + my_strlen(pwd));
+      my_strcat(data->env[0], &pwd[0]);
       get_usr_name(data);
+      data->pwd = my_strdup(get_full_var_from_env(data, "PWD"));
       return ;
     }
   j = 0;
