@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Apr  4 16:20:26 2016 bougon_p
-** Last update Thu Apr  7 14:00:50 2016 bougon_p
+** Last update Fri Apr  8 16:03:42 2016 bougon_p
 */
 
 #include "shell.h"
@@ -33,6 +33,15 @@ void	init_all_cmd(t_data *data, char *buf, int len_max)
     }
 }
 
+void	do_pipe(int *n, int *k, t_cdlist *tmp, char buf)
+{
+  *n += 1;
+  *k = 0;
+  tmp->data->cmd[*n][*k] = buf;
+  *n += 1;
+  *k = 0;
+}
+
 void		word_tab(t_data *data, char *buf, int n, int k)
 {
   t_cdlist	*tmp;
@@ -56,13 +65,7 @@ void		word_tab(t_data *data, char *buf, int n, int k)
   	  k = 0;
   	}
       else if (buf[i] == '|' && k > 0 && buf[i + 1] != ';')
-  	{
-	  n++;
-  	  k = 0;
-	  tmp->data->cmd[n][k++] = buf[i];
-	  n++;
-  	  k = 0;
-  	}
+	do_pipe(&n, &k, tmp, buf[i]);
       else if (buf[i] != ' ')
   	tmp->data->cmd[n][k++] = buf[i];
     }

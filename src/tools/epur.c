@@ -5,10 +5,19 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 18:16:34 2016 bougon_p
-** Last update Mon Apr  4 16:34:16 2016 bougon_p
+** Last update Fri Apr  8 17:58:40 2016 bougon_p
 */
 
 #include "shell.h"
+
+void	epur_all_cmd(t_cdlist *tmp)
+{
+  int	j;
+
+  j = -1;
+  while (tmp->data->cmd[++j] != NULL)
+    tmp->data->cmd[j] = my_epur_str(tmp->data->cmd[j]);
+}
 
 char    *my_epur_str(char *str)
 {

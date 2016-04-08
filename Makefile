@@ -5,7 +5,7 @@
 ## Login   <bougon_p@epitech.net>
 ## 
 ## Started on  Mon Mar 28 11:55:21 2016 bougon_p
-## Last update Thu Apr  7 20:28:52 2016 bougon_p
+## Last update Fri Apr  8 19:01:48 2016 bougon_p
 ##
 
 # USEFUL VARIABLES
@@ -31,6 +31,9 @@ FREE		=	src/free/
 
 SRC		=	$(MAIN)main.c \
 			$(MAIN)cmd.c \
+			$(MAIN)useful_cmd.c \
+			$(MAIN)rewrite_cmd.c \
+			$(MAIN)check_cmd.c \
 			$(MAIN)err.c \
 			$(MAIN)count.c \
 			$(MAIN)path.c \

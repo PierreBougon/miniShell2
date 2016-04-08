@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:09:58 2016 bougon_p
-** Last update Wed Apr  6 18:17:16 2016 bougon_p
+** Last update Fri Apr  8 19:07:39 2016 bougon_p
 */
 
 #ifndef	SHELL_H_
@@ -66,6 +66,14 @@ void	parse_args(char *, t_data *);
 char	*get_next_path(t_data *);
 bool	parse_pipes(t_cdlist *);
 int	check_pipe_err(t_cdlist *);
+void	check_cmd_exist(t_data *, char *, bool *);
+bool	check_cmd(char *);
+bool	check_path_exist(t_data *, char **, bool *);
+char	*rewrite_cmd(char *);
+char	*rewrite_bin_cmd(char *);
+void	cmd_err(t_data *, char **);
+int	m_execve(char *, char **, char **);
+void	wait_exit();
 
 /*
 ** BUILTIN
@@ -84,6 +92,7 @@ void	free_tab(char **);
 */
 
 char	*my_epur_str(char *);
+void	epur_all_cmd(t_cdlist *);
 char	**init_tab(int, int);
 char	*get_var_from_env(t_data *, char *);
 char	*get_full_var_from_env(t_data *, char *);

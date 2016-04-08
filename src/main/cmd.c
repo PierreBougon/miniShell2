@@ -5,114 +5,31 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 13:59:56 2016 bougon_p
-** Last update Fri Apr  8 15:23:08 2016 bougon_p
+** Last update Fri Apr  8 17:58:55 2016 bougon_p
 */
 
 #include "shell.h"
-
-char	*rewrite_cmd(char *cmd)
-{
-  char	*new;
-
-  if (my_strncmp(cmd, "/bin/", 5) == 0)
-    return (cmd);
-  if ((new = malloc(sizeof(char) * my_strlen(cmd) + 6)) == NULL)
-    return (NULL);
-  my_bzero(new, my_strlen(cmd) + 6);
-  my_strcpy(new, "/bin/");
-  my_strcat(new, cmd);
-  free(cmd);
-  return (new);
-}
-
-char	*rewrite_bin_cmd(char *cmd)
-{
-  char	*new;
-
-  if (my_strncmp(cmd, "/bin/", 5) != 0)
-    return (cmd);
-  new = my_strdup(&cmd[5]);
-  free(cmd);
-  return (new);
-}
-
-bool	check_cmd(char *cmd)
-{
-  int	i;
-  bool	slash;
-
-  slash = false;
-  i = -1;
-  while (cmd[++i])
-    {
-      if (cmd[i] == '/' && slash)
-	return (true);
-      if (cmd[i] == '/')
-	slash = true;
-      else
-	slash = false;
-    }
-  return (false);
-}
-
-bool	check_path_exist(t_data *data, char **tab, bool *full_test)
-{
-  int	nb_path;
-
-  data->nb_path = 1;
-  if ((nb_path = get_pos_from_env(data, "PATH")) == -1)
-    {
-      *tab = rewrite_cmd(*tab);
-      *full_test = false;
-      if (check_cmd(*tab) == true)
-	{
-	  putstr_err(*tab);
-	  putstr_err(": Command not found.\n");
-	  return (false);
-	}
-    }
-  return (true);
-}
 
 int	exec_forked(t_data *data, char **tab)
 {
   bool	full_test;
 
   full_test = true;
-  if (check_path_exist(data, &tab[0], &full_test) == false)
-    exit(1);
-  data->savecmd = tab[0];
-  while (tab[0][0] != 0
-	 && execve(tab[0], tab, data->env) == -1)
+  check_cmd_exist(data, tab[0], &full_test);
+  while (tab[0][0] != 0 &&
+	 m_execve(tab[0], tab, data->env) == -1)
     {
       if (full_test)
 	{
 	  tab[0] = rewrite_bin_cmd(tab[0]);
-	  if (((tab[0] = get_next_path(data)) == NULL) ||
-	      (check_cmd(tab[0]) == true))
+	  if (((tab[0] = get_next_path(data)) == NULL))
 	    full_test = false;
 	}
       if (!full_test)
-	{
-	  putstr_err(data->savecmd);
-	  putstr_err(": Command not found.\n");
-	  break ;
-	}
+	cmd_err(data, tab);
     }
-  free_tab(tab);
-  exit(1);
-}
-
-void	wait_exit()
-{
-  int	status;
-
-  wait(&status);
-  if (WIFSIGNALED(status))
-    {
-      if (WTERMSIG(status) == SIGSEGV)
-	my_putstr("Segmentation fault (core dumped)\n");
-    }
+  cmd_err(data, tab);
+  return (0);
 }
 
 void	exec_pipe(t_data *data, char **tab, char **tab_pipe)
@@ -161,15 +78,6 @@ int	launch_cmd(t_data *data, char **tab, char **tab_pipe)
   return (cpid);
 }
 
-void	epur_all_cmd(t_cdlist *tmp)
-{
-  int	j;
-
-  j = -1;
-  while (tmp->data->cmd[++j] != NULL)
-    tmp->data->cmd[j] = my_epur_str(tmp->data->cmd[j]);
-}
-
 int		exec_cmd(char *buf, t_data *data)
 {
   int		ret;
@@ -183,7 +91,6 @@ int		exec_cmd(char *buf, t_data *data)
       if ((data->pipe = parse_pipes(tmp)) == true)
 	if (check_pipe_err(tmp) == 1)
 	  return (0);
-      /* show_all_tab(tmp, data); */
       if (tmp->data->cmd[0][0] != 0)
 	{
 	  if ((ret = check_builtin(data, tmp->data->cmd)) == 1)
