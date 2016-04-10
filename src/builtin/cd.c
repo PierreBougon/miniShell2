@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:48:45 2016 bougon_p
-** Last update Sun Apr 10 13:50:53 2016 bougon_p
+** Last update Sun Apr 10 16:26:40 2016 bougon_p
 */
 
 #include "shell.h"
@@ -48,44 +48,16 @@ char		*get_real_path(char *pwd_asked, char *act_pwd)
   return (act_pwd);
 }
 
-char	*rework_home(char *home)
-{
-  int	i;
-  char	*tmp;
-
-  tmp = my_strdup(home);
-  tmp[0] = 'P';
-  tmp[1] = 'W';
-  tmp[2] = 'D';
-  tmp[3] = '=';
-  i = 4;
-  while (tmp[++i])
-    {
-      tmp[i - 1] = home[i];
-    }
-  tmp[i - 1] = 0;
-  return (tmp);
-}
-
 void	change_path(t_data *data, char *pwd_asked,
 		    char *start_pwd, bool go_home)
 {
   char	*act_pwd;
   int	j;
-  char	*home;
 
   if (start_pwd == NULL)
     return ;
   if (go_home)
-    {
-      j = get_pos_from_env(data, "PWD");
-      free(data->env[j]);
-      home = get_full_var_from_env(data, "HOME");
-      data->env[j] = rework_home(home);
-      free(data->pwd);
-      data->pwd = my_strdup(data->env[j]);
-      return ;
-    }
+    return (go_to_home(data));
   if ((act_pwd = malloc(sizeof(char) * my_strlen(start_pwd) + 1)) == NULL)
     exit(1);
   my_bzero(act_pwd, my_strlen(start_pwd) + 1);
@@ -96,6 +68,13 @@ void	change_path(t_data *data, char *pwd_asked,
   data->env[j] = act_pwd;
   free(data->pwd);
   data->pwd = my_strdup(act_pwd);
+}
+
+void	cannot_access(char *pwd_asked)
+{
+  putstr_err("Cannot access : ");
+  putstr_err(pwd_asked);
+  putstr_err("\n");
 }
 
 int	m_cd(t_data *data)
@@ -109,11 +88,7 @@ int	m_cd(t_data *data)
     return (0);
   go_home = false;
   pwd_asked = data->cmd[1];
-  if (pwd_asked == NULL)
-    {
-      pwd_asked = get_var_from_env(data, "HOME");
-      go_home = true;
-    }
+  pwd_asked = set_home(data, &go_home, pwd_asked);
   if (data->old_pwd == NULL && pwd_asked[0] == '-')
     return (0);
   if (pwd_asked[0] == '-')
@@ -126,10 +101,6 @@ int	m_cd(t_data *data)
       change_path(data, pwd_asked, start_pwd, go_home);
     }
   else
-    {
-      putstr_err("Cannot access : ");
-      putstr_err(pwd_asked);
-      putstr_err("\n");
-    }
+    cannot_access(pwd_asked);
   return (0);
 }

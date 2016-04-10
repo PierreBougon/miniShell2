@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Wed Mar 30 22:49:53 2016 bougon_p
-** Last update Wed Apr  6 23:29:58 2016 bougon_p
+** Last update Sun Apr 10 16:24:25 2016 bougon_p
 */
 
 #include "shell.h"
@@ -19,9 +19,8 @@ void	create_var(t_data *data)
   j = -1;
   if (data->cmd[2] == NULL)
     {
-      if ((data->cmd = my_dup_tab(data->cmd)) == NULL)
-	exit(1);
-      if ((data->cmd[2] = malloc(sizeof(char) * 1)) == NULL)
+      if ((data->cmd = my_dup_tab(data->cmd)) == NULL ||
+	  (data->cmd[2] = malloc(sizeof(char) * 1)) == NULL)
 	exit(1);
       data->cmd[2][0] = 0;
       data->cmd[3] = NULL;

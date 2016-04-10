@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Mar 28 12:09:58 2016 bougon_p
-** Last update Fri Apr  8 19:07:39 2016 bougon_p
+** Last update Sun Apr 10 16:30:07 2016 bougon_p
 */
 
 #ifndef	SHELL_H_
@@ -53,6 +53,10 @@ int	check_builtin(t_data *, char **);
 int	init_builtins(t_data *);
 char	*strcatnext_file(char *, char *);
 void	modify_pwd(char *);
+int	check_exit(char *);
+char	*set_home(t_data *, bool *, char *);
+void	go_to_home(t_data *);
+char	*rework_home(char *);
 
 /*
 ** MAIN
@@ -74,12 +78,8 @@ char	*rewrite_bin_cmd(char *);
 void	cmd_err(t_data *, char **);
 int	m_execve(char *, char **, char **);
 void	wait_exit();
-
-/*
-** BUILTIN
-*/
-
-int	check_exit(char *);
+void	copy_env(char **, t_data *);
+void	get_usr_name(t_data *);
 
 /*
 ** FREE
