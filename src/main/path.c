@@ -5,19 +5,36 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Apr  4 17:58:03 2016 bougon_p
-** Last update Thu Apr  7 14:52:54 2016 bougon_p
+** Last update Sun Apr 10 13:40:16 2016 bougon_p
 */
 
 #include "shell.h"
 
-int	copy_next_path(char *cmd, char *path, int num_path)
+int	max_path(char *path)
 {
-  int	count_separ;
-  int	n;
   int	i;
+  int	n;
+
+  i = -1;
+  n = 1;
+  while (path[++i] != 0)
+    {
+      if (path[i] == ':')
+	n++;
+    }
+  return (n);
+}
+
+int		copy_next_path(char *cmd, char *path, int num_path)
+{
+  int		count_separ;
+  int		n;
+  int		i;
 
   i = -1;
   count_separ = 1;
+  if (num_path > max_path(path))
+    return (1);
   while (count_separ < num_path && path[++i])
     {
       if (path[i] == ':')
@@ -25,8 +42,6 @@ int	copy_next_path(char *cmd, char *path, int num_path)
       if (count_separ >= num_path)
 	break ;
     }
-  if (path[i] == 0)
-    return (1);
   n = 0;
   while (path[++i] && path[i] != ':')
     {
@@ -42,7 +57,7 @@ char		*get_next_path(t_data *data)
   char		*path;
   char		*new;
 
-  path = get_var_from_env(data, "PATH");
+  path = data->path;
   if ((new = malloc(sizeof(char) *
 		    my_strlen(data->savecmd) + my_strlen(path) + 2)) == NULL)
     exit(1);

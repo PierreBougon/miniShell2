@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Fri Apr  8 17:54:05 2016 bougon_p
-** Last update Fri Apr  8 17:54:14 2016 bougon_p
+** Last update Sun Apr 10 13:44:03 2016 bougon_p
 */
 
 #include "shell.h"
@@ -46,5 +46,5 @@ void	check_cmd_exist(t_data *data, char *tab, bool *full_test)
 {
   if (check_path_exist(data, &tab, full_test) == false)
     exit(1);
-  data->savecmd = tab;
+  data->savecmd = my_strdup(tab);
 }
