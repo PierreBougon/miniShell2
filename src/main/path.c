@@ -5,7 +5,7 @@
 ** Login   <bougon_p@epitech.net>
 **
 ** Started on  Mon Apr  4 17:58:03 2016 bougon_p
-** Last update Sun Apr 10 13:40:16 2016 bougon_p
+** Last update Tue Apr 12 11:52:43 2016 bougon_p
 */
 
 #include "shell.h"
@@ -57,7 +57,7 @@ char		*get_next_path(t_data *data)
   char		*path;
   char		*new;
 
-  path = data->path;
+  path = get_var_from_env(data, "PATH");;
   if ((new = malloc(sizeof(char) *
 		    my_strlen(data->savecmd) + my_strlen(path) + 2)) == NULL)
     exit(1);
